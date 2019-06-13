@@ -1,0 +1,39 @@
+{{ if .Values.ingress.enabled }}
+{{- $fullName := include "fullname" . -}}
+{{- $servicePort := .Values.service.externalPort -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    draft: {{ default "draft-app" .Values.draft }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app: {{ template "fullname" . }}
+{{- if .Values.ingress.labels }}
+{{ toYaml .Values.ingress.labels | indent 4 }}
+{{- end }}
+{{- with .Values.ingress.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+  rules:
+{{ if and .Values.ingress.subdomain .Values.ingress.basedomain }}
+  - host: {{ .Values.ingress.subdomain }}.{{ .Values.ingress.basedomain }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ template "fullname" . }}
+          servicePort: {{ .Values.service.externalPort }}
+{{ end }}
+{{ range .Values.ingress.hosts }}
+  - host: {{ . }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ $fullName }}
+          servicePort: {{ $servicePort }}
+{{ end }}
+{{ end }}
