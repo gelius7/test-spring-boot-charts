@@ -24,21 +24,22 @@ podTemplate(label: label, containers: [
   node(label) {
     stage("Prepare") {
       container("builder") {
-        butler.prepare(IMAGE_NAME)
+//        butler.prepare(IMAGE_NAME)
+        echo "param name : $params.paramName"
       }
     }
     stage("Checkout") {
       container("builder") {
-        try {
-          if (REPOSITORY_SECRET) {
-            git(url: REPOSITORY_URL, branch: BRANCH_NAME, credentialsId: REPOSITORY_SECRET)
-          } else {
-            git(url: REPOSITORY_URL, branch: BRANCH_NAME)
-          }
-        } catch (e) {
-          butler.failure(SLACK_TOKEN_DEV, "Checkout")
-          throw e
-        }
+//        try {
+//          if (REPOSITORY_SECRET) {
+//            git(url: REPOSITORY_URL, branch: BRANCH_NAME, credentialsId: REPOSITORY_SECRET)
+//          } else {
+//            git(url: REPOSITORY_URL, branch: BRANCH_NAME)
+//          }
+//        } catch (e) {
+//          butler.failure(SLACK_TOKEN_DEV, "Checkout")
+//          throw e
+//        }
 
 //        butler.scan("java")
       }
