@@ -6,6 +6,8 @@ def REPOSITORY_SECRET = ""
 def SLACK_TOKEN_DEV = []
 def SLACK_TOKEN_DQA = ""
 
+def PARAMNM = ""
+
 @Library("github.com/opsnow-tools/valve-butler")
 def butler = new com.opsnow.valve.v7.Butler()
 def label = "worker-${UUID.randomUUID().toString()}"
@@ -28,15 +30,22 @@ podTemplate(label: label, containers: [
     stage("Prepare") {
       container("builder") {
 //        butler.prepare(IMAGE_NAME)
-        if($params) {
-          if($params.paramName) {
-            echo "param name : $params.paramName"
+        try {
+          if($params) {
+            if($params.paramName) {
+              echo "param name : $params.paramName"
+                PARAMNM = $params.paramName
+            } else {
+              echo "param name : default pppp" 
+            }
           } else {
-            echo "param name : default pppp" 
+            echo "no param"
           }
-        } else {
-          echo "no param"
+        } chatch(ex) {
+          PARAMNM = "default"
         }
+
+        echo "PARAMNM"
       }
     }
     stage("Checkout") {
