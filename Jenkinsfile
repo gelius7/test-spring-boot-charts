@@ -11,7 +11,7 @@ def butler = new com.opsnow.valve.v7.Butler()
 def label = "worker-${UUID.randomUUID().toString()}"
 
 properties([
-  buildDiscarder(logRotator(daysToKeepStr: "60", numToKeepStr: "30"))
+  buildDiscarder(logRotator(daysToKeepStr: "60", numToKeepStr: "30")),
   parameters {[
     string(name: 'paramName', defaultValue: 'Hello default', description: 'This is test')
   ]}
