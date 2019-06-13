@@ -45,7 +45,7 @@ podTemplate(label: label, containers: [
           PARAMNM = "default"
         }
 
-        echo "PARAMNM"
+        echo "PARAMNM : ${PARAMNM} " 
       }
     }
     stage("Checkout") {
