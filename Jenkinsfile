@@ -28,10 +28,14 @@ podTemplate(label: label, containers: [
     stage("Prepare") {
       container("builder") {
 //        butler.prepare(IMAGE_NAME)
-        if($params.paramName) {
-          echo "param name : $params.paramName"
+        if($params) {
+          if($params.paramName) {
+            echo "param name : $params.paramName"
+          } else {
+            echo "param name : default pppp" 
+          }
         } else {
-          echo "param name : default pppp" 
+          echo "no param"
         }
       }
     }
