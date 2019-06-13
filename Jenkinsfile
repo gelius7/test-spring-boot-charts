@@ -21,10 +21,10 @@ podTemplate(label: label, containers: [
   hostPathVolume(mountPath: "/home/jenkins/.draft", hostPath: "/home/jenkins/.draft"),
   hostPathVolume(mountPath: "/home/jenkins/.helm", hostPath: "/home/jenkins/.helm")
 ]) {
-  parameters {
-    string(name: 'paramName', defaultValue: 'Hello default', description: 'This is test')
-  }
   node(label) {
+    parameters {
+      string(name: 'paramName', defaultValue: 'Hello default', description: 'This is test')
+    }
     stage("Prepare") {
       container("builder") {
 //        butler.prepare(IMAGE_NAME)
