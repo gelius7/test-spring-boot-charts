@@ -11,10 +11,7 @@ def butler = new com.opsnow.valve.v7.Butler()
 def label = "worker-${UUID.randomUUID().toString()}"
 
 properties([
-  buildDiscarder(logRotator(daysToKeepStr: "60", numToKeepStr: "30")),
-  parameters {[
-    string(name: 'paramName', defaultValue: 'Hello default', description: 'This is test')
-  ]}
+  buildDiscarder(logRotator(daysToKeepStr: "60", numToKeepStr: "30"))
 ])
 podTemplate(label: label, containers: [
   containerTemplate(name: "builder", image: "quay.io/opsnow-tools/valve-builder", command: "cat", ttyEnabled: true, alwaysPullImage: true),
@@ -25,6 +22,9 @@ podTemplate(label: label, containers: [
   hostPathVolume(mountPath: "/home/jenkins/.helm", hostPath: "/home/jenkins/.helm")
 ]) {
   node(label) {
+    parameters {
+      string(name: 'paramName', defaultValue: 'Hello default', description: 'This is test')
+    }
     stage("Prepare") {
       container("builder") {
 //        butler.prepare(IMAGE_NAME)
