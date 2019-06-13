@@ -30,9 +30,8 @@ podTemplate(label: label, containers: [
 //        butler.prepare(IMAGE_NAME)
         if($params.paramName) {
           echo "param name : $params.paramName"
-          echo "param name : default pppp" 
         } else {
-          echo "param name : $params.paramName"
+          echo "param name : default pppp" 
         }
       }
     }
