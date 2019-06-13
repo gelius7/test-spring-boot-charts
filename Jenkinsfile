@@ -41,7 +41,7 @@ podTemplate(label: label, containers: [
           } else {
             echo "no param"
           }
-        } chatch(ex) {
+        } catch(ex) {
           PARAMNM = "default"
         }
 
