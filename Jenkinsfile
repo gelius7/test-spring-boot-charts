@@ -21,6 +21,9 @@ podTemplate(label: label, containers: [
   hostPathVolume(mountPath: "/home/jenkins/.draft", hostPath: "/home/jenkins/.draft"),
   hostPathVolume(mountPath: "/home/jenkins/.helm", hostPath: "/home/jenkins/.helm")
 ]) {
+  parameters {
+    string(name: 'paramName', defaultValue: 'Hello default', description: 'This is test')
+  }
   node(label) {
     stage("Prepare") {
       container("builder") {
