@@ -22,13 +22,18 @@ podTemplate(label: label, containers: [
   hostPathVolume(mountPath: "/home/jenkins/.helm", hostPath: "/home/jenkins/.helm")
 ]) {
   node(label) {
+//    parameters {
+//      string(name: 'paramName', defaultValue: 'Hello default', description: 'This is test')
+//    }
     stage("Prepare") {
       container("builder") {
-        parameters {
-          string(name: 'paramName', defaultValue: 'Hello default', description: 'This is test')
-        }
 //        butler.prepare(IMAGE_NAME)
-        echo "param name : $params.paramName"
+        if( $params.paramName == "" ) {
+          echo "param name : $params.paramName"
+          echo "param name : default pppp" 
+        } else {
+          echo "param name : $params.paramName"
+        }
       }
     }
     stage("Checkout") {
